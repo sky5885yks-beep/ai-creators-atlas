@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>中文 AI 创作者 · GitHub 地图</title>
+<meta name="description" content="中文社区知名 AI 博主与创作者的 GitHub 导航地图：教程科普、工具创作、Prompt 方法论、社区平台与开发综合，含代表项目与星标。" />
+<style>
+  :root{
+    --paper:#ffffff;--surface:#ffffff;--surface-sunk:#f6f6f4;
+    --line:#e7e7e5;--line-strong:#d4d4d1;
+    --ink:#1d1d1b;--ink-2:#5c5b55;--ink-3:#8a887f;
+    --accent:#1f6b5a;--accent-soft:#e3efea;
+    --key:#9a5a08;--key-soft:#f6ecdc;
+    --r-s:4px;--r-m:8px;--r-l:12px;--r-pill:999px;
+    --shadow:0 8px 24px rgba(20,20,18,.08);
+    --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    --serif:"Noto Serif SC","Songti SC","Source Han Serif SC",Georgia,serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink)}
+  body{
+    font-family:var(--sans);font-size:15px;line-height:24px;-webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(rgba(29,29,27,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(29,29,27,.028) 1px,transparent 1px);
+    background-size:32px 32px;
+  }
+  a{color:inherit}
+  button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  .top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .top-in{max-width:1440px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:26px;height:26px;border:1.5px solid var(--ink);border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:600}
+  .brand b{font-family:var(--serif);font-size:15px;white-space:nowrap}
+  .brand span{color:var(--ink-3);font-size:10px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  .tools{display:flex;align-items:center;gap:10px}
+  .search{display:flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:7px 12px;background:var(--surface);min-width:240px}
+  .search input{border:0;outline:0;background:transparent;font:inherit;font-size:13px;width:100%}
+  .search input::placeholder{color:var(--ink-3)}
+  .seg{display:flex;border:1px solid var(--line-strong);border-radius:var(--r-pill);overflow:hidden}
+  .seg button{padding:6px 12px;font-size:12.5px;color:var(--ink-2)}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+  .wrap{max-width:1440px;margin:0 auto;padding:0 24px 72px}
+  .hero{padding:40px 0 22px;max-width:820px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--line-strong)}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.6vw,40px);line-height:1.28;margin:0 0 12px;letter-spacing:.5px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{color:var(--ink-2);margin:0;max-width:660px}
+  .lede b{color:var(--ink)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;margin:22px 0 18px}
+  .stat{background:var(--surface);padding:13px 16px}
+  .stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .stat .v{font-family:var(--mono);font-size:21px;line-height:1.35;margin-top:2px}
+  .stat .v small{font-size:11px;color:var(--ink-3);margin-left:4px}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+  .chip{border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:5px 12px;font-size:13px;color:var(--ink-2);background:var(--surface);white-space:nowrap;transition:.15s}
+  .chip:hover{border-color:var(--ink-3);color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .sep{flex:1}
+  .sortbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3)}
+  select{font:inherit;font-size:12.5px;color:var(--ink);border:1px solid var(--line-strong);border-radius:var(--r-s);background:var(--surface);padding:4px 6px;outline:none}
+
+  .board{border-top:1px solid var(--line);margin-top:14px}
+  .band{display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .band-rail .no{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.14em}
+  .band-rail h2{font-family:var(--serif);font-size:17px;margin:2px 0 6px;font-weight:600}
+  .band-rail p{font-size:12px;line-height:20px;color:var(--ink-3);margin:0 0 10px}
+  .count{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-pill);padding:1px 8px}
+  .people{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px}
+
+  .person{text-align:left;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);padding:14px 14px 12px;transition:.16s;display:flex;flex-direction:column;gap:8px}
+  .person:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px)}
+  .p-head{display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--serif);font-size:15px;font-weight:600;flex:none}
+  .p-id{min-width:0;flex:1}
+  .p-name{font-size:14px;font-weight:600;line-height:20px;display:flex;align-items:center;gap:6px}
+  .p-handle{font-family:var(--mono);font-size:11px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .p-follow{font-family:var(--mono);font-size:11px;color:var(--ink-2);text-align:right;white-space:nowrap}
+  .p-follow small{display:block;font-size:9px;color:var(--ink-3);letter-spacing:.08em}
+  .p-tag{font-size:12.5px;line-height:20px;color:var(--ink-2);min-height:40px}
+  .repos{display:flex;flex-direction:column;gap:3px;border-top:1px solid var(--line);padding-top:8px;margin-top:auto}
+  .repo{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);text-decoration:none}
+  .repo:hover{color:var(--accent)}
+  .repo .rn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+  .repo .rs{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+  .p-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .plat{font-size:10px;color:var(--ink-3);border:1px solid var(--line);border-radius:3px;padding:0 5px;line-height:16px}
+  .plat.link{color:var(--accent);border-color:#cfe3dc;text-decoration:none}
+  .plat.link:hover{background:var(--accent-soft)}
+  .more{margin-left:auto;font-size:11px;color:var(--accent)}
+
+  .rank{display:none;margin-top:16px;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface)}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-sunk)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#fafaf9}
+  td.num{font-family:var(--mono);font-size:12px}
+  .rankname{display:flex;align-items:center;gap:8px;font-weight:500}
+  .rankname .avatar{width:24px;height:24px;border-radius:6px;font-size:11px}
+
+  .modal{position:fixed;inset:0;z-index:60;display:none;background:rgba(29,29,27,.24);padding:24px;overflow:auto}
+  .modal.open{display:flex;align-items:flex-start;justify-content:center}
+  .sheet{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-l);max-width:620px;width:100%;box-shadow:var(--shadow);margin:auto}
+  .sheet-head{display:flex;gap:14px;padding:20px;border-bottom:1px solid var(--line)}
+  .sheet-head .avatar{width:46px;height:46px;font-size:19px;border-radius:11px}
+  .sheet-head h3{font-family:var(--serif);font-size:20px;margin:0 0 2px;font-weight:600}
+  .sheet-head .h{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+  .close{margin-left:auto;font-size:20px;color:var(--ink-3);line-height:1}
+  .sheet-body{padding:18px 20px}
+  .sheet-body .tagline{font-size:13.5px;color:var(--ink-2);margin:0 0 14px}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;font-size:12px;color:var(--ink-3)}
+  .meta b{font-family:var(--mono);color:var(--ink);font-weight:500}
+  .plats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+  .plats .lab{font-size:11px;color:var(--ink-3);width:100%;letter-spacing:.08em;text-transform:uppercase;font-family:var(--mono)}
+  .plats a{font-size:12.5px;color:var(--accent);border:1px solid #cfe3dc;border-radius:var(--r-pill);padding:4px 11px;text-decoration:none;background:var(--accent-soft)}
+  .plats a:hover{background:#d5e9e2}
+  .plats span.tag{font-size:12.5px;color:var(--ink-3);border:1px dashed var(--line-strong);border-radius:var(--r-pill);padding:4px 11px}
+  .repo-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+  .repo-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none}
+  .repo-row:hover .rn{color:var(--accent)}
+  .repo-row .rn{font-size:13px;font-weight:500}
+  .repo-row .rd{font-size:11.5px;color:var(--ink-3);line-height:17px;margin-top:2px}
+  .repo-row .rs{font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-left:auto;white-space:nowrap}
+  .sheet-foot{display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--line);align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border-radius:var(--r-s);padding:8px 13px;font-size:13px;text-decoration:none}
+  .btn:hover{background:#175347}
+  .btn.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--line-strong)}
+  .btn.ghost:hover{border-color:var(--ink-3);color:var(--ink)}
+
+  footer{border-top:1px solid var(--line);margin-top:22px;padding-top:18px;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;font-size:12px;color:var(--ink-3);line-height:19px}
+  footer .mono{font-size:11px}
+  .dim{opacity:.15;pointer-events:none;filter:grayscale(1)}
+  .hidden{display:none!important}
+
+  @media (max-width:1080px){ .band{grid-template-columns:150px minmax(0,1fr)} }
+  @media (max-width:680px){
+    .top-in{padding:10px 16px}
+    .search{min-width:0;flex:1}
+    .wrap{padding:0 16px 56px}
+    .hero{padding:26px 0 16px}
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .band{grid-template-columns:minmax(0,1fr);gap:10px}
+    .people{grid-template-columns:1fr}
+    .rank{overflow-x:auto}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <div class="mark">CN</div>
+      <div><b>中文 AI 创作者地图</b><br /><span>Creators Atlas · GitHub</span></div>
+    </div>
+    <div class="tools">
+      <label class="search">
+        <span class="mono" style="font-size:11px;color:var(--ink-3)">/</span>
+        <input id="q" type="search" placeholder="搜索博主、仓库或关键词…" autocomplete="off" />
+      </label>
+      <div class="seg" id="viewSeg">
+        <button type="button" data-view="map" aria-pressed="true">地图</button>
+        <button type="button" data-view="rank" aria-pressed="false">榜单</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Chinese AI Creators · Atlas</div>
+    <h1>跟着<em>人</em>找入口，<br />而不是在 star 榜里捞针</h1>
+    <p class="lede">
+      中文 AI 圈的信息散在公众号、B站、博客和 X 上，GitHub 只是其中一站。这张图按<strong>创作者</strong>组织：先认出人，再给出他的<strong>主阵地入口</strong>与代表作。有人只有社媒没有代码仓库，也照样保留。数字为 <span class="mono">2026-11-23</span> 快照。
+    </p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <div class="controls" id="cats"></div>
+  <div class="controls" id="plats" style="margin-top:-2px"></div>
+  <div class="controls" style="margin-bottom:0">
+    <span style="font-size:12px;color:var(--ink-3)">排序</span>
+    <div class="seg" id="sortSeg">
+      <button type="button" data-sort="star" aria-pressed="true">代表作 star</button>
+      <button type="button" data-sort="follower" aria-pressed="false">GitHub followers</button>
+    </div>
+    <span class="sep"></span>
+    <span class="sortbox mono" id="hint">16 位创作者</span>
+  </div>
+
+  <section class="board" id="board" aria-label="创作者地图"></section>
+
+  <section class="rank" id="rank">
+    <table>
+      <thead><tr><th>#</th><th>创作者</th><th>分类</th><th>GitHub followers</th><th>代表作</th><th>star</th></tr></thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <div>口径：GitHub 公开 API 取 followers 与 star；博客/官网/B站/X 链接均已核实可访问。公众号没有公开的账号主页地址，站点用搜狗微信搜索作为入口。<br />收录标准是「在中文 AI 圈有持续影响力」，不要求有 GitHub 主号，也不把媒体机构算作个人博主。</div>
+    <div class="mono">SNAPSHOT 2026-11-23</div>
+  </footer>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="avatar" id="mAvatar">K</div>
+      <div>
+        <h3 id="mName">—</h3>
+        <div class="h" id="mHandle">@—</div>
+      </div>
+      <button class="close" id="mClose" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="sheet-body">
+      <p class="tagline" id="mTag">—</p>
+      <div class="meta">
+        <span>followers <b id="mFollow">—</b></span>
+        <span>分类 <b id="mCat">—</b></span>
+        <span>代表作最高 <b id="mTopStar">—</b></span>
+      </div>
+      <div class="plats" id="mPlats"></div>
+      <div class="repo-list" id="mRepos"></div>
+    </div>
+    <div class="sheet-foot">
+      <a class="btn" id="mLink" href="#" target="_blank" rel="noopener">在 GitHub 打开主页 ↗</a>
+      <button class="btn ghost" id="mCopy" type="button">复制 @handle</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = [
+  { id:"tutorial", no:"01", title:"教程科普", desc:"系统课、逐段精读与概念科普，适合打基础。" },
+  { id:"tools", no:"02", title:"工具与创作", desc:"做 Skill、做产品、做工作流，能直接拿来用。" },
+  { id:"prompt", no:"03", title:"Prompt 方法论", desc:"结构化提示词与可复用的写作框架。" },
+  { id:"community", no:"04", title:"社区与平台", desc:"聚合型社区和项目发现入口，覆盖人数最多。" },
+  { id:"general", no:"05", title:"开发与综合", desc:"受众更广的技术博主，AI 只是其中一部分。" }
+];
+
+const PEOPLE = [
+  { id:"datawhalechina", name:"Datawhale", handle:"datawhalechina", followers:35360, cat:"community", avatar:"D",
+    tag:"国内最大的开源 AI 学习社区，教材与课程全部开源。", plat:["公众号","社区","GitHub"],
+    repos:[
+      { n:"hello-agents", s:87645, d:"《从零开始构建智能体》原理与实践教程" },
+      { n:"happy-llm", s:35052, d:"《从零开始构建大模型》" },
+      { n:"self-llm", s:32839, d:"开源大模型食用指南" }
+    ]},
+  { id:"521xueweihan", name:"削微寒", handle:"521xueweihan", followers:14131, cat:"community", avatar:"削",
+    tag:"HelloGitHub 月刊创始人，中文圈最稳定的开源项目发现入口。", plat:["月刊","网站","GitHub"],
+    repos:[
+      { n:"HelloGitHub", s:190614, d:"分享 GitHub 上有趣、入门级的开源项目" },
+      { n:"GitHub520", s:30358, d:"解决 GitHub 访问图片加载慢的问题" },
+      { n:"img5", s:2, d:"图片资源仓库" }
+    ]},
+  { id:"fengdu78", name:"黄海广", handle:"fengdu78", followers:13883, cat:"tutorial", avatar:"黄",
+    tag:"公众号「机器学习初学者」，把吴恩达课程整理成中文笔记，影响了一代入门者。", plat:["公众号","知乎"],
+    repos:[
+      { n:"Coursera-ML-AndrewNg-Notes", s:38150, d:"吴恩达机器学习课程个人笔记" },
+      { n:"deeplearning_ai_books", s:21269, d:"deeplearning.ai 课程笔记及资源" },
+      { n:"WZU-machine-learning-course", s:2094, d:"温州大学《机器学习》课程资料" }
+    ]},
+  { id:"MorvanZhou", name:"莫烦", handle:"MorvanZhou", followers:21679, cat:"tutorial", avatar:"莫",
+    tag:"莫烦Python，机器学习与强化学习的视频教程体系，代码即课件。", plat:["B站","YouTube"],
+    repos:[
+      { n:"tutorials", s:13110, d:"机器学习相关教程" },
+      { n:"Reinforcement-learning-with-tensorflow", s:9529, d:"强化学习教程代码" },
+      { n:"agentup", s:23, d:"像用微信一样用 AI agents 团队" }
+    ]},
+  { id:"mli", name:"李沐", handle:"mli", followers:23932, cat:"tutorial", avatar:"李",
+    tag:"《动手学深度学习》作者，论文逐段精读，中文 AI 教育影响力最大的研究者之一。", plat:["B站","课程"],
+    repos:[
+      { n:"paper-reading", s:34144, d:"深度学习经典与新论文逐段精读" },
+      { n:"autocut", s:7846, d:"用文本编辑器剪视频" },
+      { n:"transformers-benchmarks", s:912, d:"Transformer 实测算力" }
+    ]},
+  { id:"bojone", name:"苏剑林", handle:"bojone", followers:12907, cat:"tutorial", avatar:"苏",
+    tag:"科学空间博主，中文 NLP 圈最硬核的推导派，注意力机制与位置编码的原创改进。", plat:["博客","知乎"],
+    repos:[
+      { n:"bert4keras", s:5412, d:"Keras 版 Transformer 实现" },
+      { n:"attention", s:1447, d:"若干注意力机制实现" },
+      { n:"heronian-square-search", s:4, d:"数学问题搜索脚本" }
+    ]},
+  { id:"wshuyi", name:"王树义", handle:"wshuyi", followers:1210, cat:"tutorial", avatar:"王",
+    tag:"公众号「玉树芝兰」，把 AI 工具、知识管理与学术工作流讲成可执行步骤。", plat:["公众号","知乎"],
+    repos:[
+      { n:"demo-notion-markdown-exporter", s:421, d:"Notion 导出 Markdown 示例" },
+      { n:"demo-chinese-text-binary-classification-with-bert", s:368, d:"BERT 中文二分类示例" },
+      { n:"zettel-builder", s:64, d:"自下而上的卡片笔记 Skill" }
+    ]},
+  { id:"karminski", name:"Karminski-牙医", handle:"karminski", followers:2038, cat:"tutorial", avatar:"牙",
+    tag:"技术科普作者，一篇文章讲透一个前沿概念，偏原理而非调包。", plat:["X","博客"],
+    repos:[
+      { n:"one-small-step", s:7006, d:"简单技术科普教程，解释前沿概念与原理" },
+      { n:"claude-code-guide-study", s:600, d:"Claude Code 源码阅读笔记" },
+      { n:"pineapple", s:256, d:"手写递归下降解释器的编程语言 demo" }
+    ]},
+
+  { id:"alchaincyf", name:"花叔", handle:"alchaincyf", followers:13436, cat:"tools", avatar:"花",
+    tag:"「橙皮书」系列作者，用 AI 重建第二大脑，把 Agent Skills 做成可交付产品。", plat:["B站","公众号","X"],
+    repos:[
+      { n:"nuwa-skill", s:38830, d:"蒸馏任何人的思维方式：心智模型、决策启发式、表达 DNA" },
+      { n:"huashu-design", s:30479, d:"在 agent 里一句话拿回可交付的设计" },
+      { n:"obsidian-ai-orange-book", s:1513, d:"Obsidian + Claude Code：用 AI 重建第二大脑" }
+    ]},
+  { id:"op7418", name:"歸藏", handle:"op7418", followers:5695, cat:"tools", avatar:"歸",
+    tag:"产品设计师，AI 生成 PPT、社交卡片等 Skill 的主要作者，偏设计交付。", plat:["X","公众号"],
+    repos:[
+      { n:"guizang-ppt-skill", s:30273, d:"生成精美 HTML 幻灯片的 agent Skill" },
+      { n:"Humanizer-zh", s:23569, d:"消除文本 AI 味的 Claude Code Skill 汉化版" },
+      { n:"guizang-social-card-skill", s:8228, d:"生成小红书社交卡片的 Skill" }
+    ]},
+  { id:"KKKKhazix", name:"数字生命卡兹克", handle:"KKKKhazix", followers:5292, cat:"tools", avatar:"卡",
+    tag:"AI 自媒体里少见的工程派：Skills 合集、自动热点站、后台 Agent 循环。", plat:["公众号","X"],
+    repos:[
+      { n:"khazix-skills", s:22464, d:"卡兹克开源的 AI Skills 合集" },
+      { n:"AIHOT", s:11249, d:"自己找热点、自己写日报的网站框架" },
+      { n:"agent-autoloop", s:6313, d:"让命令行 Agent 在后台自己接活跟进" }
+    ]},
+
+  { id:"lijigang", name:"李继刚", handle:"lijigang", followers:3270, cat:"prompt", avatar:"李",
+    tag:"中文 Prompt 圈代表人物，用结构化写法把模型能力压到具体任务上。", plat:["X","公众号"],
+    repos:[
+      { n:"ljg-skills", s:7761, d:"个人 Skills 合集" },
+      { n:"prompts", s:838, d:"结构化 Prompts，用于各种大语言模型" },
+      { n:"supervim", s:2, d:"macOS 全键盘控制" }
+    ]},
+  { id:"langgptai", name:"云中江树", handle:"langgptai", followers:649, cat:"prompt", avatar:"云",
+    tag:"结构化 Prompt 框架 LangGPT 作者，把提示词工程写成了可复用的模板语言。", plat:["公众号","GitHub"],
+    repos:[
+      { n:"LangGPT", s:12728, d:"让每个人都能写出高质量提示词的结构化框架" },
+      { n:"wonderful-prompts", s:6394, d:"中文 Prompt 精选与 ChatGPT 使用指南" },
+      { n:"PromptVer", s:4, d:"提示词的语义化版本管理" }
+    ]},
+
+  { id:"liyupi", name:"程序员鱼皮", handle:"liyupi", followers:25056, cat:"general", avatar:"鱼",
+    tag:"B站百万粉全栈博主，AI 资源大全与 Vibe Coding 教程，偏应用与求职。", plat:["B站","公众号"],
+    repos:[
+      { n:"ai-guide", s:22312, d:"AI 资源大全 + Vibe Coding 零基础教程" },
+      { n:"codefather", s:9087, d:"编程学习路线图与宝典" },
+      { n:"Awesome-MCP-ZH", s:0, d:"MCP 中文资源精选" }
+    ]},
+  { id:"ruanyf", name:"阮一峰", handle:"ruanyf", followers:88120, cat:"general", avatar:"阮",
+    tag:"科技爱好者周刊作者，中文技术写作的长青树，AI 内容占比逐年上升。", plat:["博客","周刊"],
+    repos:[
+      { n:"weekly", s:108564, d:"科技爱好者周刊，每周五发布" },
+      { n:"es6tutorial", s:21410, d:"《ECMAScript 6 入门》开源教程" },
+      { n:"seed-westlake", s:26, d:"互动式 3D 西湖地图" }
+    ]},
+  { id:"Germey", name:"崔庆才", handle:"Germey", followers:7844, cat:"general", avatar:"崔",
+    tag:"爬虫领域知名作者，近年转向 AI 应用与 MCP 工具链，AI 属性相对偏弱。", plat:["博客","公众号"],
+    repos:[
+      { n:"AwesomeWebScraping", s:266, d:"爬虫库、工具与 API 清单" },
+      { n:"LaravelGeetest", s:156, d:"Laravel 极验验证码组件" },
+      { n:"awesome-mcp-servers", s:1, d:"MCP servers 合集" }
+    ]}
+];
+
+/* 主阵地链接：仅收录已核实可访问的地址；公众号等无法给链接的只保留文字标签 */
+const LINKS = {
+  liyupi:[{t:"博客",u:"https://www.codefather.cn"},{t:"X",u:"https://x.com/yupi996"}],
+  alchaincyf:[{t:"B站",u:"https://space.bilibili.com/14097567"},{t:"X",u:"https://x.com/AlchainHust"},{t:"官网",u:"https://huasheng.ai"}],
+  datawhalechina:[{t:"官网",u:"https://datawhale.cn"}],
+  fengdu78:[{t:"博客",u:"http://www.ai-start.com"}],
+  MorvanZhou:[{t:"官网",u:"https://mofanx.com"}],
+  bojone:[{t:"博客",u:"https://kexue.fm"}],
+  lijigang:[{t:"博客",u:"http://www.lijigang.com"}],
+  ruanyf:[{t:"博客",u:"https://www.ruanyifeng.com"},{t:"X",u:"https://x.com/ruanyf"}],
+  Germey:[{t:"博客",u:"https://www.cuiqingcai.com"},{t:"X",u:"https://x.com/GermeyAce"}],
+  "521xueweihan":[{t:"官网",u:"https://hellogithub.com"}],
+  op7418:[{t:"X",u:"https://x.com/op7418"}]
+};
+
+/* 没有公开 GitHub 主号，但在中文 AI 圈有影响力的人 */
+const EXTRA = [
+  { id:"baoyu", name:"宝玉", handle:null, followers:null, cat:"general", avatar:"宝",
+    tag:"AI 产品观察者与译者，把海外一手信息整理成中文长文，影响力主要在博客、公众号与 X。",
+    plat:["公众号"],
+    repos:[] }
+];
+EXTRA.forEach(p=>{ PEOPLE.push(p); });
+LINKS.baoyu = [{t:"博客",u:"https://baoyu.io"},{t:"X",u:"https://x.com/dotey"}];
+
+/* 公众号没有公开的账号主页地址，用搜狗微信搜索作为可点击入口 */
+const linksOf = p => {
+  const arr = (p.handle ? [{t:"GitHub",u:"https://github.com/"+p.handle}] : []).concat(LINKS[p.id] || []);
+  if(p.plat.includes("公众号") && !arr.some(l=>l.t==="公众号")){
+    arr.push({t:"公众号", u:"https://weixin.sogou.com/weixin?type=1&query="+encodeURIComponent(p.name)});
+  }
+  return arr;
+};
+const catById = Object.fromEntries(CATS.map(c=>[c.id,c]));
+const byId = Object.fromEntries(PEOPLE.map(p=>[p.id,p]));
+const topStar = p => p.repos.length ? Math.max(...p.repos.map(r=>r.s)) : 0;
+let activeCat = null, activePlat = null, sortBy = "star", view = "map";
+
+/* stats */
+(function(){
+  const gh = PEOPLE.filter(p=>p.handle);
+  const totalF = gh.reduce((a,p)=>a+(p.followers||0),0);
+  const totalS = PEOPLE.reduce((a,p)=>a+topStar(p),0);
+  const items = [
+    {k:"Creators", v:PEOPLE.length, s:"位创作者"},
+    {k:"GitHub", v:gh.length, s:"个账号"},
+    {k:"Followers", v:(totalF/1000).toFixed(1)+"k", s:"GitHub 合计"},
+    {k:"Top Repo Stars", v:(totalS/1000).toFixed(0)+"k", s:"代表作合计"}
+  ];
+  document.getElementById("stats").innerHTML = items.map(i=>
+    `<div class="stat"><div class="k">${i.k}</div><div class="v">${i.v}<small>${i.s}</small></div></div>`).join("");
+})();
+
+/* category chips */
+(function(){
+  const host = document.getElementById("cats");
+  const mk = (label,id)=>{
+    const b=document.createElement("button");
+    b.className="chip"; b.type="button"; b.textContent=label; b.dataset.cat=id; b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",()=>{
+      activeCat = (activeCat===id)?null:id;
+      host.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.cat===(activeCat||"") ? "true":"false"));
+      render();
+    });
+    host.appendChild(b);
+  };
+  mk("全部","");
+  CATS.forEach(c=>mk(c.title,c.id));
+  host.querySelector('[data-cat=""]').setAttribute("aria-pressed","true");
+})();
+
+/* platform chips */
+(function(){
+  const host = document.getElementById("plats");
+  const set = new Set();
+  PEOPLE.forEach(p=>{ linksOf(p).forEach(l=>set.add(l.t)); p.plat.forEach(x=>set.add(x)); });
+  const order = ["GitHub","博客","官网","B站","X","公众号"];
+  const list = order.filter(x=>set.has(x)).concat([...set].filter(x=>!order.includes(x)));
+  const mk = (label,val)=>{
+    const b=document.createElement("button");
+    b.className="chip"; b.type="button"; b.textContent=label; b.dataset.plat=val; b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",()=>{
+      activePlat = (activePlat===val)?null:val;
+      host.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.plat===(activePlat||"") ? "true":"false"));
+      render();
+    });
+    host.appendChild(b);
+  };
+  const lab = document.createElement("span");
+  lab.style.cssText = "font-size:12px;color:var(--ink-3);margin-right:2px";
+  lab.textContent = "主阵地";
+  host.appendChild(lab);
+  mk("全部","");
+  list.forEach(x=>mk(x,x));
+  host.querySelector('[data-plat=""]').setAttribute("aria-pressed","true");
+})();
+
+/* view + sort */
+document.getElementById("viewSeg").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  view = b.dataset.view;
+  document.querySelectorAll("#viewSeg button").forEach(x=>x.setAttribute("aria-pressed", x===b?"true":"false"));
+  document.getElementById("board").classList.toggle("hidden", view!=="map");
+  document.getElementById("rank").style.display = view==="rank" ? "block" : "none";
+  render();
+});
+document.getElementById("sortSeg").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  sortBy = b.dataset.sort;
+  document.querySelectorAll("#sortSeg button").forEach(x=>x.setAttribute("aria-pressed", x===b?"true":"false"));
+  render();
+});
+
+/* search */
+const q = document.getElementById("q");
+q.addEventListener("input", render);
+document.addEventListener("keydown", e=>{
+  if(e.key==="/" && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+  if(e.key==="Escape"){
+    if(document.getElementById("modal").classList.contains("open")) closeModal();
+    else { q.value=""; render(); }
+  }
+});
+
+/* render */
+function visible(p){
+  const term = q.value.trim().toLowerCase();
+  if(activeCat && p.cat!==activeCat) return false;
+  if(activePlat){
+    const has = linksOf(p).some(l=>l.t===activePlat) || p.plat.includes(activePlat);
+    if(!has) return false;
+  }
+  if(!term) return true;
+  const hay = (p.name+" "+(p.handle||"")+" "+p.tag+" "+p.plat.join(" ")+" "+p.repos.map(r=>r.n+" "+r.d).join(" ")).toLowerCase();
+  return hay.includes(term);
+}
+const sortFn = (a,b)=> sortBy==="star" ? topStar(b)-topStar(a) : (b.followers||0)-(a.followers||0);
+
+function render(){
+  const shown = PEOPLE.filter(visible);
+  document.getElementById("hint").textContent = shown.length + " 位创作者";
+  renderBoard(shown);
+  renderRank(shown);
+}
+
+function renderBoard(list){
+  const host = document.getElementById("board");
+  host.innerHTML = "";
+  CATS.forEach(c=>{
+    const people = list.filter(p=>p.cat===c.id).sort(sortFn);
+    if(!people.length) return;
+    const sec = document.createElement("section");
+    sec.className = "band";
+    sec.innerHTML = `
+      <div class="band-rail">
+        <div class="no">${c.no}</div><h2>${c.title}</h2><p>${c.desc}</p>
+        <span class="count">${people.length} CREATORS</span>
+      </div>
+      <div class="people"></div>`;
+    const grid = sec.querySelector(".people");
+    people.forEach(p=>{
+      const card = document.createElement("article");
+      card.className = "person";
+      card.tabIndex = 0;
+      card.setAttribute("role","button");
+      const linkChips = linksOf(p).slice(0,3).map(l=>
+        `<a class="plat link" href="${l.u}" target="_blank" rel="noopener"${l.t==="公众号"?' title="公众号无公开主页，点击在搜狗微信搜索里查找"':""}>${l.t} ↗</a>`).join("");
+      const linkedTypes = new Set(linksOf(p).map(l=>l.t));
+      const textChips = p.plat.filter(x=>!linkedTypes.has(x)).slice(0,2).map(x=>`<span class="plat">${x}</span>`).join("");
+      card.innerHTML = `
+        <div class="p-head">
+          <div class="avatar">${p.avatar}</div>
+          <div class="p-id">
+            <div class="p-name">${p.name}</div>
+            <div class="p-handle">${p.handle ? "@"+p.handle : "社媒创作者 · 无 GitHub 主号"}</div>
+          </div>
+          <div class="p-follow">${p.followers ? p.followers.toLocaleString("en-US") : "—"}<small>${p.followers ? "FOLLOWERS" : "SOCIAL"}</small></div>
+        </div>
+        <div class="p-tag">${p.tag}</div>
+        ${p.repos.length ? `<div class="repos">
+          ${p.repos.slice(0,2).map(r=>`<a class="repo" href="https://github.com/${p.handle}/${r.n}" target="_blank" rel="noopener">
+            <span class="rn">${r.n}</span><span class="rs">★ ${r.s.toLocaleString("en-US")}</span></a>`).join("")}
+        </div>` : `<div class="repos"><span class="rs" style="color:var(--ink-3);font-size:11.5px">主阵地在博客 / 公众号 / X，直接看详情里的入口</span></div>`}
+        <div class="p-foot">
+          ${linkChips}${textChips}
+          <span class="more">详情 →</span>
+        </div>`;
+      card.addEventListener("click", e=>{ if(e.target.closest("a")) return; openModal(p.id); });
+      card.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openModal(p.id); }});
+      grid.appendChild(card);
+    });
+    host.appendChild(sec);
+  });
+  if(!list.length){
+    host.innerHTML = `<div style="padding:40px 0;color:var(--ink-3);font-size:13px">没有匹配的创作者，试试清空搜索或切换分类。</div>`;
+  }
+}
+
+function renderRank(list){
+  const rows = [...list].sort(sortFn);
+  document.getElementById("rankBody").innerHTML = rows.map((p,i)=>{
+    const top = p.repos.length ? [...p.repos].sort((a,b)=>b.s-a.s)[0] : null;
+    return `<tr data-id="${p.id}">
+      <td class="num">${String(i+1).padStart(2,"0")}</td>
+      <td><span class="rankname"><span class="avatar">${p.avatar}</span>${p.name} <span class="mono" style="color:var(--ink-3);font-size:11px">${p.handle ? "@"+p.handle : "社媒"}</span></span></td>
+      <td>${catById[p.cat].title}</td>
+      <td class="num">${p.followers ? p.followers.toLocaleString("en-US") : "—"}</td>
+      <td>${top ? top.n : "—"}</td>
+      <td class="num">${top ? "★ " + top.s.toLocaleString("en-US") : "—"}</td>
+    </tr>`;
+  }).join("");
+  document.querySelectorAll("#rankBody tr").forEach(tr=>{
+    tr.style.cursor="pointer";
+    tr.addEventListener("click", ()=>openModal(tr.dataset.id));
+  });
+}
+
+/* modal */
+const modal = document.getElementById("modal");
+function openModal(id){
+  const p = byId[id];
+  document.getElementById("mAvatar").textContent = p.avatar;
+  document.getElementById("mName").textContent = p.name;
+  document.getElementById("mHandle").textContent = p.handle ? "@" + p.handle : "无 GitHub 主号 · 社媒创作者";
+  document.getElementById("mTag").textContent = p.tag;
+  document.getElementById("mFollow").textContent = p.followers ? p.followers.toLocaleString("en-US") : "—";
+  document.getElementById("mCat").textContent = catById[p.cat].title;
+  document.getElementById("mTopStar").textContent = p.repos.length ? "★ " + topStar(p).toLocaleString("en-US") : "—";
+
+  const plats = document.getElementById("mPlats");
+  const links = linksOf(p).filter(l=>l.t !== "GitHub");
+  const linkedTypes = new Set(linksOf(p).map(l=>l.t));
+  plats.innerHTML = `<span class="lab">主阵地</span>` +
+    (p.handle ? `<a href="https://github.com/${p.handle}" target="_blank" rel="noopener">GitHub @${p.handle}</a>` : "") +
+    links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener"${l.t==="公众号"?' title="公众号无公开主页，点击在搜狗微信搜索里查找"':""}>${l.t} ↗</a>`).join("") +
+    p.plat.filter(x=>!linkedTypes.has(x)).map(x=>`<span class="tag">${x}（无固定链接）</span>`).join("") +
+    (links.some(l=>l.t==="公众号") ? `<span class="lab" style="text-transform:none;letter-spacing:0;color:var(--ink-3);margin-top:2px">公众号没有可分享的账号主页，这里用搜狗微信搜索作为入口，点开后在结果里找到账号最近文章。</span>` : "");
+
+  const repoHost = document.getElementById("mRepos");
+  if(p.repos.length){
+    repoHost.innerHTML = [...p.repos].sort((a,b)=>b.s-a.s).map(r=>
+      `<a class="repo-row" href="https://github.com/${p.handle}/${r.n}" target="_blank" rel="noopener">
+        <div style="min-width:0"><div class="rn">${r.n}</div><div class="rd">${r.d}</div></div>
+        <div class="rs">★ ${r.s.toLocaleString("en-US")}</div>
+      </a>`).join("");
+  } else {
+    repoHost.innerHTML = `<div style="padding:14px 0;font-size:12.5px;color:var(--ink-3);line-height:20px">这位创作者没有公开的 GitHub 主号，内容主要在博客、公众号与 X 上更新。上方「主阵地」即为入口。</div>`;
+  }
+
+  const link = document.getElementById("mLink");
+  const copy = document.getElementById("mCopy");
+  if(p.handle){
+    link.style.display = "";
+    link.href = "https://github.com/" + p.handle;
+    copy.style.display = "";
+    copy.textContent = "复制 @handle";
+    copy.onclick = async ()=>{
+      try { await navigator.clipboard.writeText(p.handle); copy.textContent = "已复制"; }
+      catch(e){ copy.textContent = "复制失败"; }
+      setTimeout(()=>{ copy.textContent = "复制 @handle"; }, 1400);
+    };
+  } else {
+    link.style.display = "none";
+    copy.style.display = "none";
+  }
+
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("mClose").focus();
+}
+function closeModal(){
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("mClose").addEventListener("click", closeModal);
+modal.addEventListener("click", e=>{ if(e.target===modal) closeModal(); });
+
+render();
+</script>
+</body>
+</html>
